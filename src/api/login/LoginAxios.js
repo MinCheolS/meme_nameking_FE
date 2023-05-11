@@ -1,14 +1,15 @@
 import axios from "axios";
+import { servertUrl } from "../../redux/modules";
 
 export const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+  baseURL: `http://52.79.197.197:8080`,
   headers: {
     "Access-Control-Allow-Origin": "*",
   },
 });
 
 export const baseURL = axios.create({
-  baseURL: `${process.env.REACT_APP_SERVER_URL}`,
+  baseURL: `http://52.79.197.197:8080`,
   headers: {
     "Access-Control-Allow-Origin": "*",
   },

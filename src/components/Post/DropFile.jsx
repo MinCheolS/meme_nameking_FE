@@ -1,15 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+// import { addEventListener } from "history/DOMUtils";
+import axios from "axios";
 
-function FileUpload() {
+
+function DropFile() {
   const [fileList, setFileList] = useState([]);
   const [previewSrc, setPreviewSrc] = useState("");
   
-  const movePage = useNavigate();
+  // const [imgPost, setImgPost] = useState({
+  //   imageUrl: ""
+  // })
+  const [postData, setPostData] = useState([]);
 
-  function godetail(){
-    movePage('/detail');
-  }
+  useEffect(() => {
+    async function fetchData() {
+    try {
+    const response = await axios.post(
+    "http://52.79.197.197:8080/posts/"
+    );
+    if (response.status === 200) {
+    alert('등록이 완료되었습니다.');
+    }
+    } catch (error) {
+    console.error(error);
+    }
+    }
+    fetchData();
+    }, []);
+
+
+  useEffect(() => {
+    fetch('http://52.79.197.197:8080/posts')
+        .then((response) => response.json())
+        .then((data) => setPostData(data.data))
+        .catch((error) => console.error(error));
+}, []);
+
+  // const movePage = useNavigate();
+// 
+
+
+  // function godetail(){
+  //   movePage('/detail',{ state: { files: fileList, id: 12345 } });
+  // }
 
   function handleDragEnter(e) {
     e.preventDefault();
@@ -55,6 +89,36 @@ function FileUpload() {
     });
   }
 
+  function getImageFiles(e) {
+    const files = e.currentTarget.files;
+    [...files].forEach(file => {
+    if (!file.type.match("image/.*")) {
+      return alert('등록이 완료되지 않았습니다.') 
+    } else {
+      return alert('등록이 완료되었습니다.')
+    }
+  } )
+}
+ 
+  
+  // document.getElementById("upload-form").addEventListener("submit", function(event) {
+  //   event.preventDefault();
+  //   var formData = new FormData(this);
+  //   var xhr = new XMLHttpRequest();
+  //   xhr.open("POST", "/upload/");
+  //   xhr.onload = function() {
+  //   if (xhr.status === 200 && xhr.responseText === "success") {
+  //   alert("이미지 등록이 완료되었습니다.");
+  //   } else {
+  //   alert("이미지 등록에 실패했습니다.");
+  //   }
+  //   };
+  //   xhr.send(formData);
+  //   });
+
+  
+  
+
   return (
     <div id="root" style={{ width: "90%", margin: "0 auto", maxWidth: "800px" }}>
     
@@ -67,7 +131,7 @@ function FileUpload() {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <div id="drop-file" className="drag-file" style={{ position: "relative", width: "100%", height: "360px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "3px dashed #dbdbdb" }}>
+          <div id="drop-file" className="drag-file" style={{ color: "white", position: "relative", width: "100%", height: "360px", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", border: "3px dashed #dbdbdb" }}>
             <img src="https://img.icons8.com/pastel-glyph/2x/image-file.png" alt="파일 아이콘" className="image" style={{ width: "40px" }} />
             <p className="message" style={{ marginBottom: 0, color: "#4b4b4b" }}>
               Drag files to upload
@@ -78,13 +142,23 @@ function FileUpload() {
           style={{ marginTop: "30px", backgroundColor: "white", color: "#8886ae", textAlign: "center", padding: "10px 0", width: "50%", borderRadius: "6px", cursor: "pointer", border: "2px solid #8886ae",  }}>
             파일 선택하기
           </label >
-          <label onClick={godetail} style={{ marginTop: "10px", backgroundColor: "#8886ae", color: "#ffffff", textAlign: "center", padding: "10px 0", width: "50%", borderRadius: "6px", cursor: "pointer" }}>등록하기</label>
-          <input className="file" id="chooseFile" type="file" onChange={handleFileSelect} accept="image/png, image/jpeg, image/gif" style={{ display: "none" }} />
+
+
+          <label 
+          // onClick =
+          style={{ marginTop: "10px", backgroundColor: "#8886ae", color: "#ffffff", textAlign: "center", padding: "10px 0", width: "50%", borderRadius: "6px", cursor: "pointer" }}>
+            등록하기</label>
+          <input
+          className="file" 
+          id="chooseFile" 
+          type="file" 
+          onChange={handleFileSelect} 
+          accept="image/png, image/jpeg, image/gif" 
+          style={{ display: "none" }} />
         </div>
       </div>
     </div>
   );
 }
 
-export default FileUpload;
-
+export default DropFile;

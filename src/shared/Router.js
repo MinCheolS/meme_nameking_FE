@@ -11,11 +11,11 @@ const Router = () => {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<MainPage />}/>
-                <Route path="/login" element={<LoginPage />}/>
-                <Route path="/signup" element={<SignupPage />}/>
-                <Route path="/detail" element={<DetailPage />}/>
-                <Route path="/fullpage" element={<FullPage />}/>
-                <Route path="/post" element={<PostPage />}/>
+                <Route path="login" element={<LoginPage />}/>
+                <Route path="signup" element={<SignupPage />}/>
+                <Route path="fullpage/:id" element={<DetailPage />}/>
+                <Route path="fullpage" element={<FullPage />}/>
+                <Route path="post" element={<PostPage />}/>
             </Routes>
         </BrowserRouter>
     )

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Layout from '../components/Layout/Layout'
 import styled from 'styled-components'
 import flex from '../styles/flex'
@@ -8,6 +8,16 @@ import Swiper from '../components/Swiper/Swiper';
 
 function MainPage() {
   const navigate = useNavigate()
+
+  const [postData, setPostData] = useState([]);
+
+  useEffect(() => {
+    fetch('http://52.79.197.197:8080/posts')
+        .then((response) => response.json())
+        .then((data) => setPostData(data.data))
+        .catch((error) => console.error(error));
+}, []);
+console.log(postData)
   return (
     <Layout>
       <StContainer bdColor='#f2f2f2' direction='column'>
@@ -40,7 +50,7 @@ function MainPage() {
           
 
         <StPopularPageimageContainer bdColor='#f2f2f2'>
-         <Swiper/>
+          <Swiper postData={postData}/>
 
           {/* <StPopularPageimage bdColor='#f2f2f2'></StPopularPageimage>
           <StPopularPageimage1 bdColor='#f2f2f2'>이미지</StPopularPageimage1>

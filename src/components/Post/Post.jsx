@@ -22,9 +22,7 @@ function Post() {
                     </PostExH3>
                     <hr width='600px'></hr>
                 </PostEx>
-                <PostTitle>
-                    나는 제목이 없어(default)
-                </PostTitle>
+              
             </PostArea>
         </div>
     )

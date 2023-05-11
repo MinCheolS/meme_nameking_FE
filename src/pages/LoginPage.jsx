@@ -28,6 +28,7 @@ function LoginPage() {
       .catch((error) => window.alert("error", error.response.data.msg));
   }
 
+  console.log(onSubmitHandler)
   return (
     <Layout>
       <StContainer>
